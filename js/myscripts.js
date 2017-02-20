@@ -42,8 +42,40 @@ function draw() {
 		dx = -dx;
 	}
 
-	if (y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+	if (y + dy < ballRadius) {
 		dy = -dy;
+	} else if (y + dy > canvas.height-ballRadius) {
+		if (x > paddleX && x < paddleX + paddleWidth) {
+			dy = -dy;
+		} else {
+			alert("GAME OVER");
+			document.location.reload();
+		}
+	}
+
+	if (rightPressed && paddleX < canvas.width-paddleWidth) {
+		paddleX += 7;
+	} else if (leftPressed && paddleX > 0) {
+		paddleX -= 7;
+	}
+}
+
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+function keyDownHandler(e) {
+	if (e.keyCode == 39) {
+		rightPressed = true;
+	} else if (e.keyCode == 37) {
+		leftPressed = true;
+	}
+}
+
+function keyUpHandler(e) {
+	if (e.keyCode == 39) {
+		rightPressed = false;
+	} else if (e.keyCode == 37) {
+		leftPressed = false;
 	}
 }
 
